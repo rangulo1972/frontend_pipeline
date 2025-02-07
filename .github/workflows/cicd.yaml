@@ -22,6 +22,19 @@ jobs:
 
       - name: Compilar proyecto...
         run: npm run build
+      
+      - name: Conectandome a aws...
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      
+      - name: Validar conexion aws...
+        run: aws s3 ls
+      
+      - name: Sync carpeta front en bucket..
+        run: aws s3 sync build/ s3://bucket-codigo-backup/rangulo/actions/codigo/ --delete
 
       - name: Instalar vercel...
         run: npm install -g vercel

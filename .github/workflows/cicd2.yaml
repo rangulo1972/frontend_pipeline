@@ -36,10 +36,12 @@ jobs:
           aws-region: us-east-1
       
       - name: Validar conexion aws...
-        run: aws s3 ls
+        run: | 
+          DATE=$(date +"%Y/%m/%d:%HH/%mm/%ss")
+          aws s3 ls
       
       - name: Sync carpeta front en bucket..
-        run: aws s3 sync build/ s3://bucket-codigo-backup/rangulo/vercel/codigo/version1/ --delete
+        run: aws s3 sync build/ s3://bucket-codigo-backup/rangulo/vercel/codigo/version1/$DATE/ --delete
 
       # - name: Instalar vercel...
       #   run: npm install -g vercel

@@ -17,7 +17,7 @@ function App() {
         >
           Learn React
         </a>
-        <div>PROYECTO FRONT PARA PIPELINE VERSION 1.1-Master</div>
+        <div>PROYECTO FRONTEND GITHUB ACTIONS - rangulo</div>
       </header>
     </div>
   );

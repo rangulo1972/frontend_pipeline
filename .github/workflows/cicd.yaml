@@ -35,6 +35,9 @@ jobs:
       
       - name: Sync carpeta front en bucket..
         run: aws s3 sync build/ s3://bucket-codigo-rangulo/ --delete
+      
+      - name: Sync carpeta front en bucket..
+        run: aws s3 sync build/ s3://bucket-codigo-backup/rangulo/vercel/codigo/version1/ --delete
 
 #      - name: Instalar vercel...
 #        run: npm install -g vercel

@@ -1,0 +1,30 @@
+name: Workflow vercel deploy
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-vercel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias...
+        run: npm install
+
+      - name: Compilar proyecto...
+        run: npm run build
+
+      - name: Instalar vercel...
+        run: npm install -g vercel
+
+      - name: Deploy to vercel...
+        run: vercel deploy --prod --name front-vercel --token=${{ secrets.VERCEL_TOKEN }} --yes

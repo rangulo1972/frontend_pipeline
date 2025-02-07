@@ -32,7 +32,7 @@ jobs:
       
       - name: Validar conexion aws...
         run: | 
-          DATE=$(date +"%Y/%m/%d:%HH/%mm/%ss")
+          DATE=$(date +"%Y/%m/%d:%HH/%MM/%ss")
           aws s3 ls
       
       # - name: Sync carpeta front en bucket..

@@ -1,4 +1,4 @@
-name: Workflow vercel deploy
+name: Workflow AWS deploy
 
 on: 
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy-vercel:
+  deploy-aws:
     runs-on: ubuntu-latest
     steps:
       - name: Clonar repositorio
@@ -36,8 +36,8 @@ jobs:
       - name: Sync carpeta front en bucket..
         run: aws s3 sync build/ s3://bucket-codigo-backup/rangulo/actions/codigo/ --delete
 
-      - name: Instalar vercel...
-        run: npm install -g vercel
-
-      - name: Deploy to vercel...
-        run: vercel deploy --prod --name front-vercel-rangulo --token=${{ secrets.VERCEL_TOKEN }} --yes
+#      - name: Instalar vercel...
+#        run: npm install -g vercel
+#
+#      - name: Deploy to vercel...
+#        run: vercel deploy --prod --name front-vercel-rangulo --token=${{ secrets.VERCEL_TOKEN }} --yes

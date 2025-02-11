@@ -2,10 +2,53 @@ name: Workflow dispatch event
 
 on: 
   workflow_dispatch:
+    inputs:
+      tipo-actualizacion:
+        description: "Seleccionar un tipo de actualización"
+        required: true
+        type: choice
+        options:
+          - aws
+          - vercel
+      nombre-carpeta-origen:
+        description: "Indica la carpeta de donde saldrá el backup"
+        required: true
+        type: string
 
 jobs:
-  hello-world:
+  run-vercel-backup:
+    if: inputs.tipo-actualizacion == 'vercel'
     runs-on: ubuntu-latest
     steps:
-      - name: mensage de Ubuntu
-        run: echo "Hello world!"
+      - name: Conectandome a aws...
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Sync carpeta front en bucket....!
+        run: |
+          aws s3 sync s3://bucket-codigo-backup/rangulo/vercel/codigo/version1/${{inputs.nombre-carpeta-origen}}/ build/ --delete
+      - name: validando carpeta de build
+        run: ls -la
+      
+      - name: Instalar vercel...
+        run: npm install -g vercel
+
+      - name: Deploy to vercel...
+        run: vercel deploy --prod --name front-vercel-rangulo --token=${{ secrets.VERCEL_TOKEN }} --yes
+
+  run-aws-backup:
+    if: inputs.tipo-actualizacion == 'aws'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conectandome a aws...
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Sync carpeta front en bucket..
+        run: |
+          aws s3 sync s3://bucket-codigo-backup/rangulo/github_actions/codigo/version1/${{inputs.nombre-carpeta-origen}}/ s3://bucket-codigo-rangulo/ --delete
+

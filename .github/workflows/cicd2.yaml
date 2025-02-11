@@ -40,11 +40,11 @@ jobs:
           DATE=$(date +"%Y_%m_%d_%HH_%MM_%ss")
           aws s3 ls
       
-      - name: Sync carpeta front en bucket..
+      - name: Sync carpeta front en bucket....!
         run: aws s3 sync build/ s3://bucket-codigo-backup/rangulo/vercel/codigo/version1/$DATE/ --delete
 
-      # - name: Instalar vercel...
-      #   run: npm install -g vercel
+      - name: Instalar vercel...
+        run: npm install -g vercel
 
-      # - name: Deploy to vercel...
-      #   run: vercel deploy --prod --name front-vercel-rangulo --token=${{ secrets.VERCEL_TOKEN }} --yes
+      - name: Deploy to vercel...
+        run: vercel deploy --prod --name front-vercel-rangulo --token=${{ secrets.VERCEL_TOKEN }} --yes

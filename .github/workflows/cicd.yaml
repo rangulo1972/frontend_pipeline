@@ -30,7 +30,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       
-      - name: Validar conexion aws...
+      - name: Validar conexion aws....!
         run: | 
           DATE=$(date +"%Y_%m_%d_%HH_%MM_%ss")
           echo "$DATE"

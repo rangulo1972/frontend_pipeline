@@ -40,7 +40,9 @@ jobs:
       #   run: aws s3 sync build/ s3://bucket-codigo-rangulo/ --delete
       
       - name: Sync carpeta front en bucket..
-        run: aws s3 sync build/ s3://bucket-codigo-backup/rangulo/github_actions/codigo/version1/$DATE/ --delete
+        run: |
+          DATE=$(date +"%Y_%m_%d_%HH_%MM_%ss")
+          aws s3 sync build/ s3://bucket-codigo-backup/rangulo/github_actions/codigo/version1/$DATE/ --delete
 
       - name: Sync carpeta front en bucket..
         run: aws s3 sync build/ s3://bucket-codigo-rangulo/ --delete
